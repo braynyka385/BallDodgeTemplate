@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 using System.Threading.Tasks;
 
 namespace BallDodgeTemplate
@@ -9,7 +10,7 @@ namespace BallDodgeTemplate
     internal class Ball
     {
         public int x, y, xSpeed, ySpeed;
-        public int size = 15;
+        public int size = 20;
 
         public Ball(int _x, int _y, int _xSpeed, int _ySpeed)
         {
@@ -31,6 +32,42 @@ namespace BallDodgeTemplate
             {
                 ySpeed *= -1;
             }
+        }
+
+        public bool Collision(Ball b)
+        {
+            Rectangle ballRec = new Rectangle(x, y, size, size);
+            Rectangle ball2Rec = new Rectangle(b.x, b.y, b.size, b.size);
+
+            if (ballRec.IntersectsWith(ball2Rec))
+            {
+                ySpeed *= -1;
+                return true;
+            }
+            return false;
+        }
+
+        public bool Collision(Player p)  
+        {
+            Rectangle ballRec = new Rectangle(x, y, size, size);
+            Rectangle playerRec = new Rectangle(p.x, p.y, p.width, p.height);
+
+            if (ballRec.IntersectsWith(playerRec))
+            {
+                if(ySpeed > 0)
+                {
+                    y = p.y - p.height;
+                }
+                else
+                {
+                    y = p.y + p.height;
+
+                }
+                ySpeed *= -1;
+                return true;
+
+            }
+            return false;
         }
     }
 }
