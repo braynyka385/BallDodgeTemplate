@@ -24,13 +24,21 @@ namespace BallDodgeTemplate
         {
             x += xSpeed;
             y += ySpeed;
-            if (x < 0 || x > w - size)
+            if (x < 0 - size)
             {
-                xSpeed *= -1;
+                x = w;
             }
-            if (y < 0 || y > h - size)
+            else if (x > w)
             {
-                ySpeed *= -1;
+                x = 0;
+            }
+            if (y < 0 - size)
+            {
+                y = h;
+            }
+            else if(y > h)
+            {
+                y = 0;
             }
         }
 
@@ -41,7 +49,6 @@ namespace BallDodgeTemplate
 
             if (ballRec.IntersectsWith(ball2Rec))
             {
-                ySpeed *= -1;
                 return true;
             }
             return false;
@@ -54,16 +61,6 @@ namespace BallDodgeTemplate
 
             if (ballRec.IntersectsWith(playerRec))
             {
-                if(ySpeed > 0)
-                {
-                    y = p.y - p.height;
-                }
-                else
-                {
-                    y = p.y + p.height;
-
-                }
-                ySpeed *= -1;
                 return true;
 
             }

@@ -36,7 +36,7 @@ namespace BallDodgeTemplate
         {
             int x = randGen.Next(10, this.Width-30);
             int y = randGen.Next(10, this.Height-30);
-            chaseBall = new Ball(x, y, 10, 10);
+            chaseBall = new Ball(x, y, 5, 5);
 
             for(int i = 0; i < difficulty; i++)
             {
@@ -74,7 +74,11 @@ namespace BallDodgeTemplate
 
             foreach (Ball b in balls)
 	        {
-                chaseBall.Collision(b);
+                if (chaseBall.Collision(b))
+                {
+                    chaseBall.ySpeed *= -1;
+                }
+                
                 
 	        }
             foreach (Ball b in balls)
@@ -82,6 +86,7 @@ namespace BallDodgeTemplate
                 if (b.Collision(hero))
                 {
                     NewBall();
+                    b.ySpeed *= -1;
                     lives--;
                     break;
                 }
@@ -97,6 +102,7 @@ namespace BallDodgeTemplate
             {
                 lives++;
                 score++;
+                chaseBall.ySpeed *= -1;
                 balls.RemoveAt(balls.Count - 1);
             }
             if (balls.Count == 0)
@@ -162,7 +168,11 @@ namespace BallDodgeTemplate
         {
                 int x = randGen.Next(10, this.Width-30);
                 int y = randGen.Next(10, this.Height-30);
-                Ball ball = new Ball(x, y, 10, 10);
+
+            int xS = randGen.Next(-5, 5);
+            int yS = randGen.Next(-5, 5);
+
+            Ball ball = new Ball(x, y, xS, yS);
                 balls.Add(ball);
         }
     }
